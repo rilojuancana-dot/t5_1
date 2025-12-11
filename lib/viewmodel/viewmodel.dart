@@ -20,7 +20,7 @@ class Viewmodel extends ChangeNotifier{
       loading = true;
       error = null;
       notifyListeners();
-      
+
       try{
         infoData = await infoRepo.obtenerInformation();
         statusData = await statusRepo.obtenerInformation();

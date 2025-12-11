@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 
 class ApiInformation {
@@ -7,7 +8,6 @@ class ApiInformation {
   Future<List<dynamic>> getPostsJson() async {
     final url = Uri.parse('$_base/customer/gbfs/v2/gl/station_information');
     final res = await http.get(url);
-
     if (res.statusCode != 200) {
       throw Exception('HTTP ${res.statusCode}');
     }
@@ -16,7 +16,7 @@ class ApiInformation {
     if (decoded is! List) {
       throw Exception('Respuesta inesperada');
     }
-
+        
     return decoded;
   }
 }
