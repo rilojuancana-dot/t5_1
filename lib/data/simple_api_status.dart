@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class ApiSatus {
+class ApiStatus {
   static const String _base = 'https://acoruna.publicbikesystem.net';
 
   Future<List<dynamic>> getPostsJson() async {
