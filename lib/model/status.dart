@@ -58,22 +58,22 @@ class Status {
   factory Status.fromJson(Map<String, dynamic> json) {
     return Status(
       id: json['station_id']?.toString() ?? '',
-      bikesAvailable: json['bikesAvailable'] ?? 0,
-      bikesDisabled: json['bikesDisabled'] ?? 0,
+      bikesAvailable: json['num_bikes_available'] ?? 0,
+      bikesDisabled: json['num_bikes_disabled'] ?? 0,
       status: StatusEnum.values.firstWhere(
         (e) => e.name == json['status']?.toString(),
         orElse: () => StatusEnum.IN_SERVICE,
       ),
-      docksAvailable: json['docksAvailable'] ?? 0,
-      docksDisabled: json['docksDisabled'] ?? 0,
-      lastReported: json['lastReported'] ?? 0,
-      isInstalled: json['isInstalled'] ?? false,
-      isRenting: json['isRenting'] ?? false,
-      isReturning: json['isReturning'] ?? false,
+      docksAvailable: json['num_docks_available'] ?? 0,
+      docksDisabled: json['num_docks_disabled'] ?? 0,
+      lastReported: json['last_reported'] ?? 0,
+      isInstalled: json['is_installed'] ?? false,
+      isRenting: json['is_renting'] ?? false,
+      isReturning: json['is_returning'] ?? false,
       vehicleDocksAvailable: VehicleDocks.fromJson(
-        json['vehicleDocksAvailable'] ?? {},
+        json['vehicle_docks_available'] ?? {},
       ),
-      vehicleTypesAvailable: (json['vehicleTypesAvailable'] as List<dynamic>?)
+      vehicleTypesAvailable: (json['vehicle_types_available'] as List<dynamic>?)
           ?.map((item) => VehicleTypes.fromJson(item))
           .toList() ?? [],
     );

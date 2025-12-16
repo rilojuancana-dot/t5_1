@@ -15,18 +15,10 @@ void main() async{
 
   viewmodel.getData();
   while(viewmodel.loading) {
-    debugPrint("Cargando...");
-    await Future.delayed(Duration(seconds: 1));
-    debugPrint("Cargando...");
-
+    
   }
   if (viewmodel.error != null){
-    debugPrint("ERROR: ${viewmodel.error}");
-    return;
-  }
-  for (var status in viewmodel.statusData){
-    debugPrint("hola");
-    debugPrint(status.toString());
+    
   }
 }
 

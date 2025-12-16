@@ -8,16 +8,24 @@ class ApiStatus {
   Future<Map<String, dynamic>> getPostsJson() async {
     final url = Uri.parse('$_base/customer/gbfs/v2/gl/station_status');
     debugPrint("ANTES DE PEDIR");
-
-    final res = await http.get(url);
-    debugPrint("DESPUES DE PEDIR");
-
-    if (res.statusCode != 200) {
+    
+    final response = await http.get(url).timeout(
+      Duration(seconds: 10), // Timeout de 10 segundos
+      onTimeout: () {
+        debugPrint("TIMEOUT");
+        throw Exception('Timeout al conectar con la API');
+      },
+    ).catchError((error) {
+      debugPrint("CATCH ERROR: $error");
+      throw Exception('Error al conectar con la API: $error');
+    });
+    
+    if (response.statusCode != 200) {
       debugPrint("STATUS ERROR CODE");
-      throw Exception('HTTP ${res.statusCode}');
+      throw Exception('HTTP ${response.statusCode}');
     }
 
-    final decoded = jsonDecode(res.body);
+    final decoded = jsonDecode(response.body);
     if (decoded is! Map<String, dynamic>) {
       debugPrint("RESPUESTA INESPERADA");
       throw Exception('Respuesta inesperada');
