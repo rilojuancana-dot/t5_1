@@ -6,7 +6,7 @@ import 'package:t5_1/data/simple_repository_status.dart';
 import 'package:t5_1/viewmodel/viewmodel.dart';
 
 void main() async{
-  debugPrint("hola");
+  runApp(MyApp());
   ApiInformation apiInfo = ApiInformation();
   ApiStatus apiStatus = ApiStatus();
   RepositoryInformation infoRepo = RepositoryInformation(apiInfo);
@@ -16,10 +16,35 @@ void main() async{
   viewmodel.getData();
   while(viewmodel.loading) {
     debugPrint("Cargando...");
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
+    debugPrint("Cargando...");
+
+  }
+  if (viewmodel.error != null){
+    debugPrint("ERROR: ${viewmodel.error}");
+    return;
   }
   for (var status in viewmodel.statusData){
+    debugPrint("hola");
     debugPrint(status.toString());
   }
 }
 
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Mi Aplicación',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Hola Mundo'),
+        ),
+        body: Center(
+          child: Text('¡Mi primera app en Flutter!'),
+        ),
+      ),
+    );
+  }
+}

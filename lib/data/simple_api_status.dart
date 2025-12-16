@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class ApiStatus {
   static const String _base = 'https://acoruna.publicbikesystem.net';
 
-  Future<List<dynamic>> getPostsJson() async {
+  Future<Map<String, dynamic>> getPostsJson() async {
     final url = Uri.parse('$_base/customer/gbfs/v2/gl/station_status');
     debugPrint("ANTES DE PEDIR");
 
@@ -18,14 +18,11 @@ class ApiStatus {
     }
 
     final decoded = jsonDecode(res.body);
-    if (decoded is! List) {
-      debugPrint("RESPUESTA NO VALIDA");
+    if (decoded is! Map<String, dynamic>) {
+      debugPrint("RESPUESTA INESPERADA");
       throw Exception('Respuesta inesperada');
     }
     debugPrint("CORRECTO");
-    for (var e in decoded){
-      debugPrint(e.toString());
-    }
     return decoded;
   }
 }

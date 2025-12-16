@@ -1,5 +1,31 @@
 import 'package:t5_1/model/vehicle_docks.dart';
 import 'package:t5_1/model/vehicle_types.dart';
+
+class StatusResponse {
+  final int lastUpdated;
+  final int ttl;
+  final List<Status> data;
+  final String version;
+
+  StatusResponse({
+    required this.lastUpdated,
+    required this.ttl,
+    required this.data,
+    required this.version,
+  });
+
+  factory StatusResponse.fromJson(Map<String, dynamic> json) {
+    return StatusResponse(
+      lastUpdated: json['last_updated'] as int,
+      ttl: json['ttl'] as int,
+      data: (json['data']['stations'] as List<dynamic>)
+        .map((e) => Status.fromJson(e as Map<String, dynamic>))
+        .toList(),
+      version: json['version'] as String,
+    );
+  }
+}
+
 class Status {
   String id;
   int bikesAvailable;
@@ -31,7 +57,7 @@ class Status {
 
   factory Status.fromJson(Map<String, dynamic> json) {
     return Status(
-      id: json['id']?.toString() ?? '',
+      id: json['station_id']?.toString() ?? '',
       bikesAvailable: json['bikesAvailable'] ?? 0,
       bikesDisabled: json['bikesDisabled'] ?? 0,
       status: StatusEnum.values.firstWhere(

@@ -18,19 +18,22 @@ class Viewmodel extends ChangeNotifier{
 
   Future<void> getData() async{
       loading = true;
+      debugPrint(loading.toString());
       error = null;
       notifyListeners();
 
       try{
-        infoData = await infoRepo.obtenerInformation();
+        debugPrint("OBTENIENDO DATOS...");
+        //infoData = await infoRepo.obtenerInformation();
         statusData = await statusRepo.obtenerInformation();
+        debugPrint("DATOS OBTENIDOS");
       }catch(e){
-        error = e.toString(); 
-        infoData = [];
-        statusData = [];
+        error = e.toString();
+        debugPrint("ERROR: $error");
       }
-
       loading = false;
+      debugPrint(loading.toString());
+
       notifyListeners();
   }
 }
