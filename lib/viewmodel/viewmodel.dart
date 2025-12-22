@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:t5_1/data/simple_api_information.dart';
+import 'package:t5_1/data/simple_api_status.dart';
 import 'package:t5_1/data/simple_repository_information.dart';
 import 'package:t5_1/data/simple_repository_status.dart';
 import 'package:t5_1/model/information.dart';
 import 'package:t5_1/model/status.dart';
 
 class Viewmodel extends ChangeNotifier{
-  RepositoryInformation infoRepo;
-  RespositoryStatus statusRepo;
+  RepositoryInformation infoRepo = RepositoryInformation(ApiInformation());
+  RespositoryStatus statusRepo = RespositoryStatus(ApiStatus());
 
-  Viewmodel(this.infoRepo, this.statusRepo);
+  
 
-  bool loading = false;
+  bool loading = true;
   String? error;
 
   List<Information> infoData = [];
   List<Status> statusData = [];
 
   Future<void> getData() async{
-      loading = true;
       debugPrint(loading.toString());
       error = null;
       notifyListeners();
@@ -32,6 +33,7 @@ class Viewmodel extends ChangeNotifier{
         debugPrint("ERROR: $error");
       }
       loading = false;
+      debugPrint(loading.toString());
 
       notifyListeners();
   }

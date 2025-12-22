@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:t5_1/view/home_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:t5_1/viewmodel/viewmodel.dart';
 
 void main() async{
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => Viewmodel(),
+      child: MyApp(),
+      )
+  );
   
 }
 
@@ -11,6 +18,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomeScreen();
+    return MaterialApp(
+      home: HomeScreen(),
+    );
   }
 }
