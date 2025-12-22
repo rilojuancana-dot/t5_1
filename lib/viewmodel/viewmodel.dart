@@ -32,7 +32,6 @@ class Viewmodel extends ChangeNotifier{
         debugPrint("ERROR: $error");
       }
       loading = false;
-      debugPrint(loading.toString());
 
       notifyListeners();
   }

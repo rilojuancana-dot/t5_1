@@ -9,7 +9,7 @@ class RespositoryStatus{
 
   Future<List<Status>> obtenerInformation() async{
     final list = await api.getPostsJson();
-    return StatusResponse.fromJson(list).data;
+    return StatusResponse.fromJson(list).data.status;
   }
 
 }

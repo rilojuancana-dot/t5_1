@@ -1,10 +1,10 @@
-import 'package:t5_1/model/vehicle_docks.dart';
-import 'package:t5_1/model/vehicle_types.dart';
+//import 'package:t5_1/model/vehicle_docks.dart';
+//import 'package:t5_1/model/vehicle_types.dart';
 
 class StatusResponse {
   final int lastUpdated;
   final int ttl;
-  final List<Status> data;
+  final Stations data;
   final String version;
 
   StatusResponse({
@@ -18,10 +18,19 @@ class StatusResponse {
     return StatusResponse(
       lastUpdated: json['last_updated'] as int,
       ttl: json['ttl'] as int,
-      data: (json['data']['stations'] as List<dynamic>)
-        .map((e) => Status.fromJson(e as Map<String, dynamic>))
-        .toList(),
+      data: Stations.fromJson(json['data']),
       version: json['version'] as String,
+    );
+  }
+}
+class Stations{
+  List<Status> status;
+
+  Stations({required this.status});
+
+  factory Stations.fromJson(Map<String,dynamic> json) {
+    return Stations(
+      status: (json['stations'] as List<dynamic>).map((e) => Status.fromJson(e)).toList()
     );
   }
 }
@@ -37,8 +46,8 @@ class Status {
   bool isInstalled;
   bool isRenting;
   bool isReturning;
-  VehicleDocks vehicleDocksAvailable;
-  List<VehicleTypes> vehicleTypesAvailable;
+  //VehicleDocks vehicleDocksAvailable;
+  //List<VehicleTypes> vehicleTypesAvailable;
   
   Status({
     required this.id,
@@ -51,8 +60,8 @@ class Status {
     required this.isInstalled,
     required this.isRenting,
     required this.isReturning,
-    required this.vehicleDocksAvailable,
-    required this.vehicleTypesAvailable,
+    //required this.vehicleDocksAvailable,
+    //required this.vehicleTypesAvailable,
   });
 
   factory Status.fromJson(Map<String, dynamic> json) {
@@ -69,13 +78,13 @@ class Status {
       lastReported: json['last_reported'] ?? 0,
       isInstalled: json['is_installed'] ?? false,
       isRenting: json['is_renting'] ?? false,
-      isReturning: json['is_returning'] ?? false,
+      isReturning: json['is_returning'] ?? false,/*
       vehicleDocksAvailable: VehicleDocks.fromJson(
         json['vehicle_docks_available'] ?? {},
       ),
       vehicleTypesAvailable: (json['vehicle_types_available'] as List<dynamic>?)
           ?.map((item) => VehicleTypes.fromJson(item))
-          .toList() ?? [],
+          .toList() ?? [],*/
     );
   }
   @override
@@ -91,8 +100,8 @@ class Status {
         'isInstalled: $isInstalled, '
         'isRenting: $isRenting, '
         'isReturning: $isReturning, '
-        'vehicleDocksAvailable: $vehicleDocksAvailable, '
-        'vehicleTypesAvailable: $vehicleTypesAvailable'
+        //'vehicleDocksAvailable: $vehicleDocksAvailable, '
+        //'vehicleTypesAvailable: $vehicleTypesAvailable'
         '}';
   }
 }
