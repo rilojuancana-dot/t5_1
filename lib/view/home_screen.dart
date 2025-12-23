@@ -11,10 +11,6 @@ class HomeScreen extends StatelessWidget{
     final viewmodel = context.watch<Viewmodel>();
 
     viewmodel.getData();
-    debugPrint(viewmodel.statusData.length.toString());
-    viewmodel.statusData.forEach( (element) {
-      debugPrint(element.toString());
-    });
     
     if(viewmodel.loading) {
       return Scaffold(

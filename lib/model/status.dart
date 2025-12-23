@@ -81,7 +81,7 @@ class Status {
       //vehicleDocksAvailable: VehicleDocks.fromJson(
         //json['vehicle_docks_available'] ?? {},
       //),
-      vehicleTypesAvailable: (json['vehicle_types_available'] as Map<String, dynamic>).values.map((e) => VehicleTypes.fromJson(e)).toList(),
+      vehicleTypesAvailable: (json['vehicle_types_available'] as List<dynamic>).map((e) => VehicleTypes.fromJson(e)).toList(),
     );
   }
   @override

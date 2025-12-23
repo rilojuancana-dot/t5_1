@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class ApiInformation {
   static const String _base = 'https://acoruna.publicbikesystem.net';
 
-  Future<List<dynamic>> getPostsJson() async {
+  Future<Map<String, dynamic>> getPostsJson() async {
     debugPrint("Entrando en API Information");
     final url = Uri.parse('$_base/customer/gbfs/v2/gl/station_information');
     final res = await http.get(url);
@@ -14,7 +14,7 @@ class ApiInformation {
     }
 
     final decoded = jsonDecode(res.body);
-    if (decoded is! List) {
+    if (decoded is! Map<String, dynamic>) {
       throw Exception('Respuesta inesperada');
     }
         

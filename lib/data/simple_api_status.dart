@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ApiStatus {
@@ -7,30 +6,24 @@ class ApiStatus {
 
   Future<Map<String, dynamic>> getPostsJson() async {
     final url = Uri.parse('$_base/customer/gbfs/v2/gl/station_status');
-    debugPrint("ANTES DE PEDIR");
     
     final response = await http.get(url).timeout(
-      Duration(seconds: 10), // Timeout de 10 segundos
+      Duration(seconds: 10), 
       onTimeout: () {
-        debugPrint("TIMEOUT");
         throw Exception('Timeout al conectar con la API');
       },
     ).catchError((error) {
-      debugPrint("CATCH ERROR: $error");
       throw Exception('Error al conectar con la API: $error');
     });
     
     if (response.statusCode != 200) {
-      debugPrint("STATUS ERROR CODE");
       throw Exception('HTTP ${response.statusCode}');
     }
 
     final decoded = jsonDecode(response.body);
     if (decoded is! Map<String, dynamic>) {
-      debugPrint("RESPUESTA INESPERADA");
       throw Exception('Respuesta inesperada');
     }
-    debugPrint("CORRECTO");
     return decoded;
   }
 }
