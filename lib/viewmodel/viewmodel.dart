@@ -21,8 +21,6 @@ class Viewmodel extends ChangeNotifier{
   Future<void> getData() async{
       debugPrint(loading.toString());
       error = null;
-      notifyListeners();
-
       try{
         debugPrint("OBTENIENDO DATOS...");
         //infoData = await infoRepo.obtenerInformation();

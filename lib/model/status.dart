@@ -1,7 +1,3 @@
-//import 'package:t5_1/model/vehicle_docks.dart';
-//import 'package:t5_1/model/vehicle_types.dart';
-
-import 'package:t5_1/model/vehicle_docks.dart';
 import 'package:t5_1/model/vehicle_types.dart';
 
 class StatusResponse {
@@ -49,7 +45,7 @@ class Status {
   bool isInstalled;
   bool isRenting;
   bool isReturning;
-  VehicleDocks vehicleDocksAvailable;
+  //VehicleDocks vehicleDocksAvailable;
   List<VehicleTypes> vehicleTypesAvailable;
   
   Status({
@@ -63,7 +59,7 @@ class Status {
     required this.isInstalled,
     required this.isRenting,
     required this.isReturning,
-    required this.vehicleDocksAvailable,
+    //required this.vehicleDocksAvailable,
     required this.vehicleTypesAvailable,
   });
 
@@ -82,12 +78,10 @@ class Status {
       isInstalled: json['is_installed'] ?? false,
       isRenting: json['is_renting'] ?? false,
       isReturning: json['is_returning'] ?? false,
-      vehicleDocksAvailable: VehicleDocks.fromJson(
-        json['vehicle_docks_available'] ?? {},
-      ),
-      vehicleTypesAvailable: (json['vehicle_types_available'] as List<dynamic>?)
-          ?.map((item) => VehicleTypes.fromJson(item))
-          .toList() ?? [],
+      //vehicleDocksAvailable: VehicleDocks.fromJson(
+        //json['vehicle_docks_available'] ?? {},
+      //),
+      vehicleTypesAvailable: (json['vehicle_types_available'] as Map<String, dynamic>).values.map((e) => VehicleTypes.fromJson(e)).toList(),
     );
   }
   @override
@@ -103,7 +97,7 @@ class Status {
         'isInstalled: $isInstalled, '
         'isRenting: $isRenting, '
         'isReturning: $isReturning, '
-        'vehicleDocksAvailable: $vehicleDocksAvailable, '
+        //'vehicleDocksAvailable: $vehicleDocksAvailable, '
         'vehicleTypesAvailable: $vehicleTypesAvailable'
         '}';
   }
