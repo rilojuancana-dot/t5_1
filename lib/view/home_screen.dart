@@ -1,18 +1,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:t5_1/view/fav_station.dart';
 import 'package:t5_1/viewmodel/viewmodel.dart';
 
 
 class HomeScreen extends StatelessWidget{
+  const HomeScreen({super.key});
+
   
   @override
-  Widget build (BuildContext context){;
+  Widget build (BuildContext context){
     final viewmodel = context.watch<Viewmodel>();
 
-    viewmodel.getData();
     
     if(viewmodel.loading) {
+      viewmodel.getData();
       return Scaffold(
       appBar: AppBar(
         title: Text('Home Screen'),
@@ -34,13 +37,18 @@ class HomeScreen extends StatelessWidget{
     }
     else {
       return Scaffold(
-        appBar: AppBar(
-          title: Text('Home Screen'),
+      appBar: AppBar(
+        title: Text('Home Screen'),
+      ),
+      body: Center(
+        child: FavStation(
+          status: viewmodel.favStationStatus!, 
+          information: viewmodel.favStationInformation!,
+          statusData: viewmodel.statusData,
+          informationData: viewmodel.infoData,
         ),
-        body: Center(
-          child: Text('Welcome'),
-        ),
-      );
+      )
+    );
     }
   }
 }

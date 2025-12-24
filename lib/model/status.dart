@@ -48,6 +48,7 @@ class Status {
   //VehicleDocks vehicleDocksAvailable;
   List<VehicleTypes> vehicleTypesAvailable;
   
+
   Status({
     required this.id,
     required this.bikesAvailable,
@@ -106,4 +107,5 @@ class Status {
 enum StatusEnum {
   IN_SERVICE,
   PLANNED,
+  UNKNOWN
 }

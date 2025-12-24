@@ -10,7 +10,8 @@ class Viewmodel extends ChangeNotifier{
   RepositoryInformation infoRepo = RepositoryInformation(ApiInformation());
   RespositoryStatus statusRepo = RespositoryStatus(ApiStatus());
 
-  
+  Status? favStationStatus;
+  InformationStation? favStationInformation;
 
   bool loading = true;
   String? error;
@@ -26,13 +27,21 @@ class Viewmodel extends ChangeNotifier{
         debugPrint("OBTENIENDO DATOS STATUS...");
 
         statusData = await statusRepo.obtenerInformation();
+        favStationStatus = statusData.first;
+        favStationInformation = getFavStationInformation();
+        
         debugPrint("DATOS OBTENIDOS");
       }catch(e){
         error = e.toString();
         debugPrint("ERROR: $error");
       }
+      loading = false;
       debugPrint(loading.toString());
 
       notifyListeners();
+  }
+  InformationStation? getFavStationInformation(){
+    if(favStationStatus == null) return null;
+    return infoData.firstWhere((info) => info.station_id == favStationStatus!.id, orElse: () => throw Exception("Error"));
   }
 }
