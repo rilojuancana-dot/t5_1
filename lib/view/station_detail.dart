@@ -130,14 +130,14 @@ class StationDetail extends StatelessWidget{
               lastReported: 0, status: StatusEnum.UNKNOWN, vehicleTypesAvailable: [],
               bikesDisabled: 0, docksDisabled: 0, isInstalled: false, isReturning: false));
             
-            ListTile(
-                title: Text('${info.name}', textAlign: TextAlign.center,),
-                subtitle: Text('Bicis disponibles: ${status.bikesAvailable}',textAlign: TextAlign.center),
-                leading: ElevatedButton(
-                  onPressed:(){
-                  Navigator.pop(context, status);
-                }, 
-                child: Icon(Icons.star)),
+            return ListTile(
+              title: Text('${info.name}', textAlign: TextAlign.center,),
+              subtitle: Text('Bicis disponibles: ${status.bikesAvailable}',textAlign: TextAlign.center),
+              leading: ElevatedButton(
+                onPressed:(){
+                Navigator.pop(context, status);
+              }, 
+              child: Icon(Icons.star)),
             );
           }
         )

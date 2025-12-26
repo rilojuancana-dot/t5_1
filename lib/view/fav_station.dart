@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:t5_1/model/information.dart';
 import 'package:t5_1/model/status.dart';
 import 'package:t5_1/view/station_detail.dart';
+import 'dart:typed_data';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:pdf/pdf.dart';
+import 'package:printing/printing.dart';
 
 class FavStation extends StatefulWidget {
     int last_updated;
@@ -45,6 +49,8 @@ class _FavStationState extends State<FavStation> {
       ),
     );
   }
+
+  
 
   Widget LastUpdated() {
     return Center(
@@ -120,10 +126,57 @@ class _FavStationState extends State<FavStation> {
           Text("|"),
 
           Text("Estado: ${widget.status.status.name}"),
-          Text("Debería bajar a por una bici?: $compensa")
+          Text("Debería bajar a por una bici?: $compensa"),
+
+          ElevatedButton(
+            onPressed: _exportPdf,
+            child: Text('Exportar a PDF'),
+          ),
         ],
       ),
     );
+  }
+  Future<Uint8List> _buildPdf() async {
+    final pdf = pw.Document();
+
+    String compensa = "NO";
+    if (widget.status.bikesAvailable > 1) {
+      compensa = "SI";
+    } else if (widget.status.bikesAvailable == 1) {
+      compensa = "QUIZÁS";
+    }
+
+    pdf.addPage(
+      pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (context) {
+          return pw.Padding(
+            padding: pw.EdgeInsets.all(16),
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Text('Estación: ${widget.status.id} ${widget.information.name}', style: pw.TextStyle(fontSize: 18)),
+                pw.SizedBox(height: 8),
+                pw.Text('Dirección: ${widget.information.adress}'),
+                pw.Text('Actualizado por última vez: ${widget.status.lastReported}'),
+                pw.Text('Hay bicis disponibles: ${widget.status.isRenting ? "Sí" : "No"}'),
+                pw.Text('Bicis disponibles: ${widget.status.bikesAvailable}'),
+                pw.Text('Estaciones disponibles: ${widget.status.docksAvailable}'),
+                pw.Text('Estado: ${widget.status.status.name}'),
+                pw.Text('Debería bajar a por una bici?: $compensa'),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+
+    return pdf.save();
+  }
+
+  Future<void> _exportPdf() async {
+    final bytes = await _buildPdf();
+    await Printing.sharePdf(bytes: bytes, filename: 'fav_station_${widget.status.id}.pdf');
   }
 
   Widget StationsList() {
@@ -133,10 +186,7 @@ class _FavStationState extends State<FavStation> {
           itemCount: widget.informationData.length,
           itemBuilder: (context, index) {
             final info = widget.informationData[index];
-            final status = widget.statusData.firstWhere((s) => s.id == info.station_id, orElse: () => 
-              Status(id: info.station_id, isRenting: false, bikesAvailable: 0, docksAvailable: 0, 
-              lastReported: 0, status: StatusEnum.UNKNOWN, vehicleTypesAvailable: [],
-              bikesDisabled: 0, docksDisabled: 0, isInstalled: false, isReturning: false));
+            final status = widget.statusData.firstWhere((s) => s.id == info.station_id);
             
             return ElevatedButton(
               onPressed: () async{

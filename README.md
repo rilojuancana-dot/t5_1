@@ -1,16 +1,8 @@
-# t5_1
+Esta aplicación pretende ofrecer de la manera más rápida a sus usuarios la información de la estación que elija, teniendo en un primer vistazo ocupando la mayor parte de la pantalla los datos a tiempo real de la misma. La gráfica principal de la estación refleja el porcentaje de los distintos tipos de bici que se encuentran disponibles, de modo que el detalle más importante de la estación queda disponible de un primer vistazo.
 
-A new Flutter project.
+Además, permite actualizar pulsando el botón correspondiente arriba a la izquierda, acceder a un listado de todas las estaciones disponibles en la ciudad en una lista en la parte inferior de la pantalla y exportar la información en pdf.
 
-## Getting Started
+Las dependencias usadas en el proyecto son: http, provider, fl_chart, pdf y printing.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![HomeScreen Preview](image-1.png)
+![StationDetail Preview](image-2.png)
