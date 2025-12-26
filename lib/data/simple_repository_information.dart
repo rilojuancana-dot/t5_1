@@ -7,10 +7,10 @@ class RepositoryInformation{
 
   RepositoryInformation(this.api);
 
-  Future<List<InformationStation>> obtenerInformation() async{
+  Future<Information> obtenerInformation() async{
 
     final list = await api.getPostsJson();
-    return Information.fromJson(list).data.stations;
+    return Information.fromJson(list);
 
   }
 

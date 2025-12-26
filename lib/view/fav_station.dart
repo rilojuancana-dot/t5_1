@@ -2,15 +2,18 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:t5_1/model/information.dart';
 import 'package:t5_1/model/status.dart';
+import 'package:t5_1/view/station_detail.dart';
 
 class FavStation extends StatefulWidget {
-    final Status status;
-    final InformationStation information;
+    int last_updated;
+    Status status;
+    InformationStation information;
     final List<Status> statusData;
     final List<InformationStation> informationData;
 
-    const FavStation({
+    FavStation({
       super.key, 
+      required this.last_updated,
       required this.status, 
       required this.information, 
       required this.statusData, 
@@ -49,7 +52,7 @@ class _FavStationState extends State<FavStation> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('Last Updated: '),
-          Text('TODO'),
+          Text('${widget.last_updated}'),
         ],
       ),
     );
@@ -85,6 +88,13 @@ class _FavStationState extends State<FavStation> {
   }
 
   Widget FavStationDetails() {
+    String compensa = "NO"; 
+    if (widget.status.bikesAvailable > 1){
+      compensa = "SI";
+    }
+    else if (widget.status.bikesAvailable == 1){
+      compensa = "QUIZÁS";
+    }
     return Padding(
       padding: EdgeInsets.all(16),
       child: Wrap(
@@ -110,6 +120,7 @@ class _FavStationState extends State<FavStation> {
           Text("|"),
 
           Text("Estado: ${widget.status.status.name}"),
+          Text("Debería bajar a por una bici?: $compensa")
         ],
       ),
     );
@@ -118,30 +129,44 @@ class _FavStationState extends State<FavStation> {
   Widget StationsList() {
     return Expanded(
       
-      child: Stack(
-        
-        children: [
-          
-          Container(
-            color: Colors.lightBlue.withAlpha(100),
-          ),
-          ListView.builder(
-            itemCount: widget.informationData.length,
-            itemBuilder: (context, index) {
-              final info = widget.informationData[index];
-              final status = widget.statusData.firstWhere((s) => s.id == info.station_id, orElse: () => 
-                Status(id: info.station_id, isRenting: false, bikesAvailable: 0, docksAvailable: 0, 
-                lastReported: 0, status: StatusEnum.UNKNOWN, vehicleTypesAvailable: [],
-                bikesDisabled: 0, docksDisabled: 0, isInstalled: false, isReturning: false));
-              
-              return ListTile(
+      child: ListView.builder(
+          itemCount: widget.informationData.length,
+          itemBuilder: (context, index) {
+            final info = widget.informationData[index];
+            final status = widget.statusData.firstWhere((s) => s.id == info.station_id, orElse: () => 
+              Status(id: info.station_id, isRenting: false, bikesAvailable: 0, docksAvailable: 0, 
+              lastReported: 0, status: StatusEnum.UNKNOWN, vehicleTypesAvailable: [],
+              bikesDisabled: 0, docksDisabled: 0, isInstalled: false, isReturning: false));
+            
+            return ElevatedButton(
+              onPressed: () async{
+                var nuevoFavorito = await Navigator.push(context, MaterialPageRoute(builder:(context) => StationDetail(
+                  last_updated: widget.last_updated,
+                  status: status, 
+                  information: info, 
+                  statusData: widget.statusData,
+                  informationData: widget.informationData
+              )));
+                if (nuevoFavorito != null){
+                  setState(() {
+                    widget.status = nuevoFavorito;
+                    widget.information = widget.informationData.firstWhere((s) => s.station_id == nuevoFavorito.id);
+                  });
+                }
+              } , 
+              child: ListTile(
                 title: Text('${info.name}', textAlign: TextAlign.center,),
                 subtitle: Text('Bicis disponibles: ${status.bikesAvailable}',textAlign: TextAlign.center),
-              );
-            },
-          )
-        ],
-      )
-    );
+                leading: ElevatedButton(onPressed:(){
+                  setState(() {
+                    widget.status = status;
+                  });
+                } , child: Icon(Icons.star)),
+              ),
+            );
+          },
+        )
+        
+      );
   }
 }

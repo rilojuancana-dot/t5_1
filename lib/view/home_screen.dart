@@ -39,9 +39,13 @@ class HomeScreen extends StatelessWidget{
       return Scaffold(
       appBar: AppBar(
         title: Text('Home Screen'),
+        leading: ElevatedButton(onPressed: (){
+          viewmodel.getData();
+        }, child: Icon(Icons.refresh)),
       ),
       body: Center(
         child: FavStation(
+          last_updated: viewmodel.lastUpdated,
           status: viewmodel.favStationStatus!, 
           information: viewmodel.favStationInformation!,
           statusData: viewmodel.statusData,

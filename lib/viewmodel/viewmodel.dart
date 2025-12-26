@@ -9,6 +9,7 @@ import 'package:t5_1/model/status.dart';
 class Viewmodel extends ChangeNotifier{
   RepositoryInformation infoRepo = RepositoryInformation(ApiInformation());
   RespositoryStatus statusRepo = RespositoryStatus(ApiStatus());
+  int lastUpdated = 0;
 
   Status? favStationStatus;
   InformationStation? favStationInformation;
@@ -23,7 +24,9 @@ class Viewmodel extends ChangeNotifier{
       error = null;
       try{
         debugPrint("OBTENIENDO DATOS...");
-        infoData = await infoRepo.obtenerInformation();
+        var information = await infoRepo.obtenerInformation();
+        lastUpdated = information.last_updated;
+        infoData = information.data.stations;
         debugPrint("OBTENIENDO DATOS STATUS...");
 
         statusData = await statusRepo.obtenerInformation();
