@@ -43,6 +43,7 @@ class Viewmodel extends ChangeNotifier{
 
       notifyListeners();
   }
+  
   InformationStation? getFavStationInformation(){
     if(favStationStatus == null) return null;
     return infoData.firstWhere((info) => info.station_id == favStationStatus!.id, orElse: () => throw Exception("Error"));

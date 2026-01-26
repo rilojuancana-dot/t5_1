@@ -37,8 +37,13 @@ dependencies:
   printing: ^5.14.2
 
 dev_dependencies:
-  flutter_test:
+  test: ^1.24.0           # Para pruebas unitarias
+  flutter_test:           # Solo para Flutter
     sdk: flutter
+  integration_test:       # Para pruebas de integración
+    sdk: flutter
+  mockito: ^5.4.0         # Para mocking
+  http: ^1.1.0       
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
