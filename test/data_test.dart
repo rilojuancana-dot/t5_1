@@ -3,7 +3,9 @@
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-@GenerateMocks([ApiInformation])
+@GenerateMocks([], customMocks: [
+  MockSpec<ApiInformation>(as: #NiceMockApiInformation)
+])
 import 'package:t5_1/data/simple_api_information.dart';
 import 'package:t5_1/data/simple_repository_information.dart';
 import 'package:test/test.dart';
@@ -12,11 +14,11 @@ import 'data_test.mocks.dart';
 
 void main(){
   group('SimpleApiTests', (){
-    late MockApiInformation apiInformation;
+    late NiceMockApiInformation apiInformation;
     late RepositoryInformation repositoryInformation;
 
     setUp((){
-      apiInformation = MockApiInformation();
+      apiInformation = NiceMockApiInformation();
       repositoryInformation = RepositoryInformation(apiInformation);
     });
 

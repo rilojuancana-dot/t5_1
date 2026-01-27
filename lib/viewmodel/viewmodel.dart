@@ -6,6 +6,7 @@ import 'package:t5_1/data/simple_repository_status.dart';
 import 'package:t5_1/model/information.dart';
 import 'package:t5_1/model/status.dart';
 
+
 class Viewmodel extends ChangeNotifier{
   RepositoryInformation infoRepo = RepositoryInformation(ApiInformation());
   RespositoryStatus statusRepo = RespositoryStatus(ApiStatus());
@@ -19,6 +20,14 @@ class Viewmodel extends ChangeNotifier{
 
   List<InformationStation> infoData = [];
   List<Status> statusData = [];
+
+  set apiStatus(ApiStatus apiStatus) {
+    statusRepo = RespositoryStatus(apiStatus);
+  }
+
+  set apiInformation(ApiInformation apiInformation) {
+    infoRepo = RepositoryInformation(apiInformation);
+  }
 
   Future<void> getData() async{
       error = null;
