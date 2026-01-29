@@ -1,14 +1,11 @@
-import 'dart:math';
 
 import 'package:mockito/mockito.dart';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:t5_1/viewmodel/viewmodel.dart';
-import 'package:test/scaffolding.dart';
 import 'package:t5_1/main.dart' as app;
 
 import '../viewmodel_test.mocks.dart';
@@ -17,7 +14,6 @@ void main() {
 
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  Viewmodel viewmodel = Viewmodel();
   testWidgets('Prueba de integración del sistema completo', (tester) async {
       
       Viewmodel viewmodel;

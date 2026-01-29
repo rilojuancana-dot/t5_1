@@ -2,12 +2,11 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:t5_1/model/information.dart';
 import 'package:t5_1/model/status.dart';
-import 'package:t5_1/view/fav_station.dart';
 
 class StationDetail extends StatelessWidget{
-  int last_updated;
-  Status status;
-  InformationStation information;
+  final int last_updated;
+  final Status status;
+  final InformationStation information;
   final List<Status> statusData;
   final List<InformationStation> informationData;
 
